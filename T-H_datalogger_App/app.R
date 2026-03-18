@@ -34,23 +34,23 @@ ui <- fluidPage(
     # 2.2. Sidebar
     sidebarPanel(
 
-      # Define settings of CSV file(s)
+      # Define settings of file(s)
       # uiOutput() is necessary to allow updating for the error message if both separators are identical
-      h5(HTML("<b>Choose the settings of your CSV file(s)</b>")),
-      h5("If you are unsure, the easiest is to open a CSV file with a text editor and check"),
+      h5(HTML("<b>Choose the settings of your file(s)</b>")),
+      h5("If you are unsure, the easiest is to open a file with a text editor and check."),
       splitLayout(cellWidths = c("50%", "50%"),
-                  uiOutput("CSV_FieldSeparator"),
-                  uiOutput("CSV_DecSeparator")
+                  uiOutput("FieldSeparator"),
+                  uiOutput("DecSeparator")
       ),
 
       # Show message if both separators are identical
       # uiOutput() is necessary to allow updating from the input
-      uiOutput("CSV_Separators"),
+      uiOutput("Separators"),
 
-      # Upload CSV file(s)
-      fileInput("CSVfiles", "Choose CSV file(s) containing T-H data",
-                multiple = TRUE, accept = ".csv"),
-      h5(HTML("Make sure that the CSV files all have column names 'Date', 'Temparature', and 'Humidity'.<br><br> Dates must be specified following one of these formats: <ul><li>'dd/mm/YYYY HH:MM:SS' (e.g. '17/03/2026 15:26:00')</li><li>'YYYY-mm-dd HH:MM:SS' (e.g. '2026-03-17 15:26:00')</li></ul> For temperature and humidity, units can be specified in the column names (e.g. 'Temperature [°C]').")),
+      # Upload file(s)
+      fileInput("InputFiles", "Choose file(s) (CSV or TXT) containing T-H data",
+                multiple = TRUE, accept = c(".csv", "txt")),
+      h5(HTML("Make sure that all files all have column names containing 'Date', 'Temparature', and 'Humidity'.<br><br> Dates and times must be specified following one of these formats: <ul><li>'dd/mm/YYYY HH:MM:SS' (e.g. '17/03/2026 15:26:00')</li><li>'YYYY-mm-dd HH:MM:SS' (e.g. '2026-03-17 15:26:00')</li></ul> For temperature and humidity, units should be specified in the column names (e.g. 'Temperature [°C]'). Only degrees Celcius (°C) and percentge relative humidity (%rH) are accepted.")),
 
       # Select the period
       # uiOutput() is necessary to allow updating the range of dateRangeInput() from the imported CSV files
@@ -107,24 +107,24 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 
-  # 3.1 Define settings of CSV file(s)
+  # 3.1 Define settings of file(s)
   # Field separator
-  output$CSV_FieldSeparator <- renderUI({
-    radioButtons("CSVsep", "Field separator",
-                 choiceNames = c("semi-colon (;)", "comma (,)"),
-                 choiceValues = c(";", ","))
+  output$FieldSeparator <- renderUI({
+    radioButtons("fileSep", "Field separator",
+                 choiceNames = c("semi-colon (;)", "comma (,)", "tab (⇥)", "space ( )"),
+                 choiceValues = c(";", ",", "\t", " "))
   })
 
   # Decimal separator
-  output$CSV_DecSeparator <- renderUI({
-    radioButtons("CSVdec", "Decimal separator",
+  output$DecSeparator <- renderUI({
+    radioButtons("fileDec", "Decimal separator",
                  choiceNames = c("period (.)", "comma (,)"),
                  choiceValues = c(".", ","))
   })
 
   # Message if field and decimal separators are identical (comma)
-  output$CSV_Separators <- renderUI({
-    if (input$CSVsep == input$CSVdec) h5(HTML("<p style='color:red;'>Make sure to select different values for the field and decimal separators</p>"))
+  output$Separators <- renderUI({
+    if (input$fileSep == input$fileDec) h5(HTML("<p style='color:red;'>Make sure to select different values for the field and decimal separators</p>"))
   })
 
 
@@ -133,10 +133,10 @@ server <- function(input, output) {
   THdata <- reactive({
 
     # Ensure that CSV file(s) has been uploaded before proceeding
-    req(input$CSVfiles)
+    req(input$InputFiles)
 
     # Read uploaded CSV file(s)
-    temp <- lapply(input$CSVfiles$datapath, read.table, header = TRUE, sep = input$CSVsep, dec = input$CSVdec) %>%
+    temp <- lapply(input$InputFiles$datapath, read.table, header = TRUE, sep = input$fileSep, dec = input$fileDec) %>%
 
             # Combine them into one data.frame
             do.call(rbind, .) %>%
