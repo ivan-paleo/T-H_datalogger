@@ -92,7 +92,7 @@ There are two ways to get the App:
 
 
 ## Saving
-**In both cases (LEIZA server and local), neither input nor output is saved in the App.** If you close the App (or the browser tab), all input and output will be deleted.  
+**In both cases (LEIZA server and local), neither input nor output is saved in the App.** If you close the App (or the browser tab), all input and output will be deleted (but no file will be deleted from your computer).  
 **In order to save the ouput, use the download buttons** (see [Operating instructions](#operating-instructions)).
 
 ---
@@ -109,7 +109,7 @@ There are two ways to get the App:
 
 First, choose the field and decimal separators for the file(s) containing temperature (T) and relative humidity (H) data.   
 *Field separator* refers to the symbol used to separate values (usually comma, semi-colon, tab or space), while the *decimal separator* is the symbol used to mark decimals (usually comma or period).  
-If you are unsure while ones are used, simply open a file with a text editor and check which symbols are used. Alternatively, you can try out after importing file(s) as the files will be reprocessed interactively if you change the separators.  
+If you are unsure, simply open a file with a text editor and check which symbols are used. Alternatively, you can try out after importing file(s) as the files will be reprocessed interactively if you change the separators.  
 Using wrong separators will throw errors in the main panel.  
 
 ><p align="center" width="100%">
