@@ -66,15 +66,22 @@ ui <- fluidPage(
       # Separator
       hr(style = "border-top: 1px solid #000000;"),
 
-      # Credit
-      splitLayout(cellWidths = c("50%", "50%"),
+      # GitHub
+      splitLayout(cellWidths = c("40%", "60%"),
                   actionButton("GitHub", "T-H_datalogger",
                                icon = icon("github", lib = "font-awesome"),
                                onclick = "window.open('https://github.com/ivan-paleo/T-H_datalogger', '_blank')"),
-                  h5("By Ivan Calandra")),
+                  h5(HTML("&#129152; Infos and help"))
+                  ),
 
       # Version number / date - ADJUST WITH NEW VERSION / DATE
-      h5("v0.1 (2026-03-17)"),
+      # Credits
+      splitLayout(cellWidths = c("50%", "50%"),
+                  h5("v0.1 (2026-03-19)"),
+                  h5("By Ivan Calandra")
+      ),
+
+      # Width of the sidebar (default = 2)
       width = 3
     ),
 
