@@ -138,7 +138,7 @@ Make sure that **all files all have column names containing 'Date', 'Temparature
 - 'dd/mm/YYYY HH:MM:SS', e.g. '17/03/2026 15:26:00'  
 - 'YYYY-mm-dd HH:MM:SS', e.g. '2026-03-17 15:26:00' (= ISO 8601)  
 
-For temperature and humidity, units should be specified in the column names (e.g. 'Temperature [°C]'). **Only degrees Celcius (°C) and percentge relative humidity (%rH) are accepted currently.**  
+**Only degrees Celcius (°C) and percentge relative humidity (%rH) are accepted currently for temperature and humidity, respectively.**  
 After importing the files, output will be displayed automatically in the main panel. Note that it may take a few seconds to load if there is a lot of data to process.
 
 Last, select the period you are interesting in using the calendar widget. The output will be updated automatically.

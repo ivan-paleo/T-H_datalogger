@@ -50,7 +50,7 @@ ui <- fluidPage(
       # Upload file(s)
       fileInput("InputFiles", "Choose file(s) (CSV or TXT) containing T-H data",
                 multiple = TRUE, accept = c(".csv", "txt")),
-      h5(HTML("Make sure that all files all have column names containing 'Date', 'Temparature', and 'Humidity'.<br><br> Dates and times must be specified following one of these formats: <ul><li>'dd/mm/YYYY HH:MM:SS' (e.g. '17/03/2026 15:26:00')</li><li>'YYYY-mm-dd HH:MM:SS' (e.g. '2026-03-17 15:26:00')</li></ul> For temperature and humidity, units should be specified in the column names (e.g. 'Temperature [°C]'). Only degrees Celcius (°C) and percentge relative humidity (%rH) are accepted.")),
+      h5(HTML("Make sure that all files all have column names containing 'Date', 'Temparature', and 'Humidity'.<br><br> Dates and times must be specified following one of these formats: <ul><li>'dd/mm/YYYY HH:MM:SS' (e.g. '17/03/2026 15:26:00')</li><li>'YYYY-mm-dd HH:MM:SS' (e.g. '2026-03-17 15:26:00')</li></ul> Only degrees Celcius (°C) and percentge relative humidity (%rH) are accepted for temperature and humidity, respectively.")),
 
       # Select the period
       # uiOutput() is necessary to allow updating the range of dateRangeInput() from the imported CSV files
