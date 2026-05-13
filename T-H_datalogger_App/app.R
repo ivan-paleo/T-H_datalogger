@@ -77,7 +77,7 @@ ui <- fluidPage(
       # Version number / date - ADJUST WITH NEW VERSION / DATE
       # Credits
       splitLayout(cellWidths = c("50%", "50%"),
-                  h5("v0.1 (2026-03-19)"),
+                  h5("v0.1.1 (2026-05-13)"),
                   h5("By Ivan Calandra")
       ),
 
@@ -149,7 +149,7 @@ server <- function(input, output) {
             do.call(rbind, .) %>%
 
             # Convert to date format
-            mutate(Date_f = as.Date(Date, tryFormats = c("%d/%m/%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S"))) %>%
+            mutate(Date_f = as.Date(Date, tryFormats = c("%d/%m/%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S", "%d-%b-%y %H:%M:%S"))) %>%
 
             # Select only T and H data
             select(Date = Date_f, `Temperature [°C]` = contains("Temperature"), `Humidity [%rH]` = contains("Humidity"))
