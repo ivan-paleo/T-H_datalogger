@@ -1,5 +1,4 @@
-# Shiny app to summarize usage data at the IMPALA
-# Process JSON exports from eLabFTW
+# Shiny app to process T-H data from dataloggers
 # Written by Ivan Calandra
 
 ###############################################################################################################
@@ -77,7 +76,7 @@ ui <- fluidPage(
       # Version number / date - ADJUST WITH NEW VERSION / DATE
       # Credits
       splitLayout(cellWidths = c("50%", "50%"),
-                  h5("v0.1.1 (2026-05-13)"),
+                  h5("v1.0 (2026-07-14)"),
                   h5("By Ivan Calandra")
       ),
 
@@ -119,14 +118,16 @@ server <- function(input, output) {
   output$FieldSeparator <- renderUI({
     radioButtons("fileSep", "Field separator",
                  choiceNames = c("semi-colon (;)", "comma (,)", "tab (⇥)", "space ( )"),
-                 choiceValues = c(";", ",", "\t", " "))
+                 choiceValues = c(";", ",", "\t", " "),
+                 selected = ";")
   })
 
   # Decimal separator
   output$DecSeparator <- renderUI({
     radioButtons("fileDec", "Decimal separator",
                  choiceNames = c("period (.)", "comma (,)"),
-                 choiceValues = c(".", ","))
+                 choiceValues = c(".", ","),
+                 selected = ".")
   })
 
   # Message if field and decimal separators are identical (comma)
@@ -149,7 +150,8 @@ server <- function(input, output) {
             do.call(rbind, .) %>%
 
             # Convert to date format
-            mutate(Date_f = as.Date(Date, tryFormats = c("%d/%m/%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S", "%d-%b-%y %H:%M:%S"))) %>%
+            mutate(Date_f = as.Date(Date,
+                                    tryFormats = c("%d/%m/%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S", "%d-%b-%y %H:%M:%S"))) %>%
 
             # Select only T and H data
             select(Date = Date_f, `Temperature [°C]` = contains("Temperature"), `Humidity [%rH]` = contains("Humidity"))
